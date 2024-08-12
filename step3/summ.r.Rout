@@ -1,0 +1,68 @@
+
+R version 4.1.3 (2022-03-10) -- "One Push-Up"
+Copyright (C) 2022 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> Home0='/work/users/s/u/sunzehui/UKBPhase6_TBSS/TBSS/'
+> Home=paste0(Home0,'FAtbss/')
+> out=paste0(Home,'/tosave')
+> system(paste0('mkdir ',out))
+mkdir: cannot create directory ‘/work/users/s/u/sunzehui/UKBPhase6_TBSS/TBSS/FAtbss//tosave’: File exists
+> system(paste0('cp ',Home,'/FA_individ/*/FA/*_FA_FA_to_target.mat ',out))
+> system(paste0('cp ',Home,'/FA_individ/*/FA/*_FA_FA_to_target_warp.nii.gz ',out))
+> system(paste0('cp ',Home,'/FA_individ/*/stats/*_masked_FAskel.nii.gz ',out))
+> system(paste0('cp ',Home,'/MD_individ/*/MD/*_masked_MD.nii.gz ',out))
+> system(paste0('cp ',Home,'/MD_individ/*/stats/*_masked_MDskel.nii.gz ',out))
+> system(paste0('cp ',Home,'/MO_individ/*/MO/*_masked_MO.nii.gz ',out))
+> system(paste0('cp ',Home,'/MO_individ/*/stats/*_masked_MOskel.nii.gz ',out))
+> system(paste0('cp ',Home,'/S0_individ/*/S0/*_masked_S0.nii.gz ',out))
+cp: cannot stat '/work/users/s/u/sunzehui/UKBPhase6_TBSS/TBSS/FAtbss//S0_individ/*/S0/*_masked_S0.nii.gz': No such file or directory
+> system(paste0('cp ',Home,'/S0_individ/*/stats/*_masked_S0skel.nii.gz ',out))
+cp: cannot stat '/work/users/s/u/sunzehui/UKBPhase6_TBSS/TBSS/FAtbss//S0_individ/*/stats/*_masked_S0skel.nii.gz': No such file or directory
+> system(paste0('cp ',Home,'/L1_individ/*/L1/*_masked_L1.nii.gz ',out))
+> system(paste0('cp ',Home,'/L1_individ/*/stats/*_masked_L1skel.nii.gz ',out))
+> system(paste0('cp ',Home,'/L2_individ/*/L2/*_masked_L2.nii.gz ',out))
+> system(paste0('cp ',Home,'/L2_individ/*/stats/*_masked_L2skel.nii.gz ',out))
+> system(paste0('cp ',Home,'/L3_individ/*/L3/*_masked_L3.nii.gz ',out))
+> system(paste0('cp ',Home,'/L3_individ/*/stats/*_masked_L3skel.nii.gz ',out))
+> mod0=c('MD','MO','L1','L2','L3','FA')
+> sub0=dir('/work/users/s/u/sunzehui/UKBPhase6_TBSS/TBSS/FAtbss/MD_individ/MD_ENIGMA_ROI_part2')
+> sub0=unlist(strsplit(sub0,'_MD_ROIout_avg.csv'))
+> l=length(mod0)
+> for(i in 1:l)
++ {
++ 	if(i<l){temp=read.csv(paste0(Home,mod0[i],'_individ/',mod0[i],'_ENIGMA_ROI_part2/',sub0[1],'_',mod0[i],'_ROIout_avg.csv'))}
++ 	if(i==l){temp=read.csv(paste0(Home0,'Enigma_ROI_1/avg_',sub0[1],'_ROIout.csv'))}
++ 	Stat=matrix(NA,length(sub0),dim(temp)[1])
++ 	colnames(Stat)=temp[,1]
++ 	rownames(Stat)=sub0
++ 	for(j in 1:length(sub0))
++ 	{
++ 	  if(i<l){temp=read.csv(paste0(Home,mod0[i],'_individ/',mod0[i],'_ENIGMA_ROI_part2/',sub0[j],'_',mod0[i],'_ROIout_avg.csv'))}
++ 	  if(i==l){temp=read.csv(paste0(Home0,'Enigma_ROI_1/avg_',sub0[j],'_ROIout.csv'))}
++ 	  rownames(temp)=temp[,1]
++       Stat[j,]=temp[colnames(Stat),2]
++ 	}
++ 	write.table(Stat,file=paste0(out,'/',mod0[i],'_ROIavg.csv'))
++ }
+> 
+> 
+> proc.time()
+   user  system elapsed 
+ 11.584  78.485 903.846 
